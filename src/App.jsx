@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import Envelope from './components/Envelope';
@@ -89,9 +89,22 @@ function App() {
   const [showInvitation, setShowInvitation] = useState(false);
   const [particles, setParticles] = useState([]);
   const [envelopeFlipped, setEnvelopeFlipped] = useState(false);
+  const audioRef = useRef(null);
+
+  // Tự động play nhạc khi load trang
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 1;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    }
+  }, []);
 
   const handleEnvelopeOpen = () => {
-    // Create floating particles effect
+    // Tạo hiệu ứng hạt
     const newParticles = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -99,17 +112,32 @@ function App() {
       delay: Math.random() * 2,
     }));
     setParticles(newParticles);
-    
-    // Show invitation after a short delay
+    // Hiện invitation sau 1s
     setTimeout(() => {
       setShowInvitation(true);
     }, 1000);
   };
 
+  // Hàm fade in nhạc
+  const fadeInAudio = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.volume = 0;
+      audio.play();
+      let vol = 0;
+      const fade = setInterval(() => {
+        vol += 0.05;
+        if (audio) audio.volume = Math.min(vol, 1);
+        if (vol >= 1) clearInterval(fade);
+      }, 80);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
-        
+        <audio ref={audioRef} src="/audio.m4a" preload="auto" />
         <ContentWrapper>
           <AnimatePresence mode="wait">
             {!showInvitation ? (
@@ -120,7 +148,7 @@ function App() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5 }}
               >
-                <Envelope onEnvelopeOpen={handleEnvelopeOpen} isOpen={showInvitation} setEnvelopeFlipped={setEnvelopeFlipped} />
+                <Envelope onEnvelopeOpen={handleEnvelopeOpen} isOpen={showInvitation} setEnvelopeFlipped={setEnvelopeFlipped} fadeInAudio={fadeInAudio} />
               </motion.div>
             ) : (
               <motion.div
@@ -134,7 +162,6 @@ function App() {
             )}
           </AnimatePresence>
         </ContentWrapper>
-
         <FloatingParticles>
           {particles.map((particle) => (
             <Particle

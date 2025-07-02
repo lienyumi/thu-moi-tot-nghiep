@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { FaHeart, FaEnvelopeOpenText } from 'react-icons/fa';
 
 const EnvelopeContainer = styled.div`
   position: relative;
@@ -282,12 +283,37 @@ const LetterLines = styled.div`
   }
 `;
 
-const Envelope = ({ onEnvelopeOpen, isOpen, setEnvelopeFlipped }) => {
+const CuteFrontContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+const CuteTitle = styled.div`
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.1rem;
+  color: #d94f6a;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px #f9d6da55;
+`;
+const CuteSub = styled.div`
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #7B6670;
+  margin-bottom: 8px;
+`;
+
+const Envelope = ({ onEnvelopeOpen, isOpen, setEnvelopeFlipped, fadeInAudio }) => {
   const envelopeRef = useRef(null);
   const flapContainerRef = useRef(null);
   const containerRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isFlapOpen, setIsFlapOpen] = useState(false);
+  const [swing, setSwing] = useState(true);
 
   useEffect(() => {
     // Animation xuất hiện phong bì
@@ -302,34 +328,66 @@ const Envelope = ({ onEnvelopeOpen, isOpen, setEnvelopeFlipped }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (isOpen) setSwing(false);
+  }, [isOpen]);
+
   // Xoay phong bì và mở nắp bằng Framer Motion
   const handleClick = () => {
     if (!isOpen && !isAnimating) {
       setIsAnimating(true);
       if (setEnvelopeFlipped) setEnvelopeFlipped(true);
-      // Xoay phong bì
-      if (envelopeRef.current && flapContainerRef.current) {
-        envelopeRef.current.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)';
-        flapContainerRef.current.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)';
-        envelopeRef.current.style.transform = 'rotateY(180deg)';
-        flapContainerRef.current.style.transform = 'rotateY(180deg)';
-        setTimeout(() => {
-          setIsFlapOpen(true); // Mở nắp bằng Framer Motion
+      // Dừng swing trước khi mở
+      setSwing(false);
+      setTimeout(() => {
+        if (envelopeRef.current && flapContainerRef.current) {
+          envelopeRef.current.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)';
+          flapContainerRef.current.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)';
+          envelopeRef.current.style.transform = 'rotateY(180deg)';
+          flapContainerRef.current.style.transform = 'rotateY(180deg)';
+          // Gọi fadeInAudio khi mở thiệp
+          if (fadeInAudio) fadeInAudio();
           setTimeout(() => {
-            setIsAnimating(false);
-            onEnvelopeOpen();
-          }, 800);
-        }, 1000);
-      }
+            setIsFlapOpen(true);
+            setTimeout(() => {
+              setIsAnimating(false);
+              onEnvelopeOpen();
+            }, 800);
+          }, 1000);
+        }
+      }, 300); // Đợi 300ms cho phong bì đứng yên rồi mới mở
     }
   };
 
   return (
-    <EnvelopeContainer ref={containerRef} onClick={handleClick}>
+    <EnvelopeContainer
+      ref={containerRef}
+      onClick={handleClick}
+      style={
+        swing
+          ? { animation: 'swing 1.6s infinite ease-in-out' }
+          : {}
+      }
+    >
+      <style>{`
+        @keyframes swing {
+          0% { transform: translateY(0) rotateZ(0deg) scale(1); }
+          20% { transform: translateY(-6px) rotateZ(-5deg) scale(1.03); }
+          40% { transform: translateY(2px) rotateZ(4deg) scale(0.98); }
+          60% { transform: translateY(-4px) rotateZ(-3deg) scale(1.01); }
+          80% { transform: translateY(1px) rotateZ(2deg) scale(1.02); }
+          100% { transform: translateY(0) rotateZ(0deg) scale(1); }
+        }
+      `}</style>
       <Glow />
       <EnvelopeWrapper ref={envelopeRef}>
         <Front>
-          <span style={{fontWeight:600,letterSpacing:1}}>Click để mở</span>
+          <CuteFrontContent>
+            <FaEnvelopeOpenText style={{ fontSize: '2.8rem', color: '#d94f6a', marginBottom: 8, filter: 'drop-shadow(0 2px 8px #f9d6da55)' }} />
+            <CuteTitle>Thiệp Mời</CuteTitle>
+            <CuteSub>Click để mở thư mời tốt nghiệp</CuteSub>
+            <FaHeart style={{ fontSize: '1.5rem', color: '#f9d6da', marginTop: 6 }} />
+          </CuteFrontContent>
         </Front>
         <Back>
           <InnerLetter>

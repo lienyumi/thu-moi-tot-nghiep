@@ -450,7 +450,7 @@ const InvitationBook = () => {
   const bookRef = useRef();
   const [currentPage, setCurrentPage] = useState(0);
   const guestName = getGuestName();
-  const cardInviteUrl = `${import.meta.env.BASE_URL}card-invite.png`;
+  const cardInviteUrl = `${import.meta.env.BASE_URL}card-invite.jpg`;
   const avatarUrl = `${import.meta.env.BASE_URL}avatar.jpg`;
 
   const goToPrevPage = () => {
@@ -495,8 +495,8 @@ const InvitationBook = () => {
           <PageContent>
             <CapIcon />
             <h1>LỄ TỐT NGHIỆP</h1>
-            <div className="desc">Thân mời bạn:</div>
-            <div className="guest">{guestName}</div>
+            {/* <div className="desc">Thân mời bạn:</div> */}
+            <div className="guest">Các bạn</div>
             <div className="desc">Hãy cùng mình lưu lại khoảnh khắc ý nghĩa này nhé!</div>
           </PageContent>
         </PageStyled>
@@ -546,7 +546,7 @@ const InvitationBook = () => {
             <DownloadButton onClick={() => {
               const link = document.createElement('a');
               link.href = cardInviteUrl;
-              link.download = 'card-invite.png';
+              link.download = 'card-invite.jpg';
               link.click();
             }}>
               🎁 Tải thư mời về máy
