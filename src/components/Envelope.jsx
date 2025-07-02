@@ -69,7 +69,7 @@ const Front = styled(EnvelopeSide)`
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,30 L50,50 L80,30 L80,70 L20,70 Z" fill="none" stroke="%237B6670" stroke-width="2"/><path d="M20,30 L50,50 L80,30" fill="none" stroke="%237B6670" stroke-width="2"/></svg>') no-repeat center;
+    // background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,30 L50,50 L80,30 L80,70 L20,70 Z" fill="none" stroke="%237B6670" stroke-width="2"/><path d="M20,30 L50,50 L80,30" fill="none" stroke="%237B6670" stroke-width="2"/></svg>') no-repeat center;
     background-size: 60%;
     opacity: 0.18;
   }
@@ -80,7 +80,7 @@ const Front = styled(EnvelopeSide)`
   }
   @media (max-width: 480px) {
     &::before {
-      background-size: 45%;
+      background-size: 100%;
     }
   }
 `;
@@ -383,7 +383,7 @@ const Envelope = ({ onEnvelopeOpen, isOpen, setEnvelopeFlipped, fadeInAudio }) =
       <EnvelopeWrapper ref={envelopeRef}>
         <Front>
           <CuteFrontContent>
-            <FaEnvelopeOpenText style={{ fontSize: '2.8rem', color: '#d94f6a', marginBottom: 8, filter: 'drop-shadow(0 2px 8px #f9d6da55)' }} />
+            {/* <FaEnvelopeOpenText style={{ fontSize: '2.8rem', color: '#d94f6a', marginBottom: 8, filter: 'drop-shadow(0 2px 8px #f9d6da55)' }} /> */}
             <CuteTitle>Thiệp Mời</CuteTitle>
             <CuteSub>Click để mở thư mời tốt nghiệp</CuteSub>
             <FaHeart style={{ fontSize: '1.5rem', color: '#f9d6da', marginTop: 6 }} />

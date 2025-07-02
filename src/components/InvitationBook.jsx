@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
-import HTMLFlipBook from 'react-pageflip';
-import {  FaMapMarkerAlt, FaClock, FaPhoneAlt, FaGraduationCap, FaGift } from 'react-icons/fa';
-
-
-
+import React, { useRef, useState } from "react";
+import styled from "styled-components";
+import HTMLFlipBook from "react-pageflip";
+import {
+  FaMapMarkerAlt,
+  FaClock,
+  FaPhoneAlt,
+  FaGraduationCap,
+  FaGift,
+} from "react-icons/fa";
 
 const BookContainer = styled.div`
   width: 420px;
@@ -46,26 +49,27 @@ const BookContainer = styled.div`
 const PageStyled = styled.div`
   width: 100%;
   height: 100%;
-  background: ${props => props.theme.colors.seasalt};
+  background: ${(props) => props.theme.colors.seasalt};
   border-radius: 18px;
-  box-shadow: 0 4px 32px 0 rgba(249,214,218,0.10), 0 2px 8px 0 rgba(123,102,112,0.08);
+  box-shadow: 0 4px 32px 0 rgba(249, 214, 218, 0.1),
+    0 2px 8px 0 rgba(123, 102, 112, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 48px 32px 32px 32px;
   text-align: center;
-  border: 2px solid ${props => props.theme.colors.frenchGray};
+  border: 2px solid ${(props) => props.theme.colors.frenchGray};
   position: relative;
   @media (max-width: 768px) {
     padding: 32px 10vw 24px 10vw;
     border-radius: 10px;
-    border: 1.5px solid ${props => props.theme.colors.frenchGray};
+    border: 1.5px solid ${(props) => props.theme.colors.frenchGray};
   }
   @media (max-width: 480px) {
     padding: 24px 7vw 16px 7vw;
     border-radius: 8px;
-    border: 1px solid ${props => props.theme.colors.frenchGray};
+    border: 1px solid ${(props) => props.theme.colors.frenchGray};
   }
   @media (max-width: 360px) {
     padding: 16px 4vw 10px 4vw;
@@ -75,18 +79,25 @@ const PageStyled = styled.div`
 
 const PageContent = styled.div`
   width: 100%;
-  font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.wenge};
+  height: 100%;
+  font-family: ${(props) => props.theme.fonts.primary};
+  color: ${(props) => props.theme.colors.wenge};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  //    justify-content: center;
   padding: 0;
+  text-align: center;
+  h1,
+  h2,
+  .guest,
+  .desc {
+    font-family: ${(props) => props.theme.fonts.primary};
+  }
   h1 {
     font-size: 2.2rem;
     margin-bottom: 12px;
     color: #d94f6a;
-    font-family: 'Playfair Display', serif;
     font-weight: 700;
     letter-spacing: 1px;
     @media (max-width: 768px) {
@@ -107,7 +118,6 @@ const PageContent = styled.div`
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: #d94f6a;
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     @media (max-width: 768px) {
       font-size: 1.3rem;
@@ -125,7 +135,6 @@ const PageContent = styled.div`
   .guest {
     color: #d94f6a;
     font-size: 1.3rem;
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     margin-bottom: 8px;
     @media (max-width: 768px) {
@@ -141,28 +150,9 @@ const PageContent = styled.div`
       margin-bottom: 4px;
     }
   }
-  .script {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.1rem;
-    color: #d94f6a;
-    margin-bottom: 8px;
-    font-weight: 700;
-    @media (max-width: 768px) {
-      font-size: 1.8rem;
-      margin-bottom: 6px;
-    }
-    @media (max-width: 480px) {
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
-    @media (max-width: 360px) {
-      font-size: 1.3rem;
-      margin-bottom: 4px;
-    }
-  }
   .desc {
     font-size: 1.1rem;
-    color: #7B6670;
+    color: #7b6670;
     margin-bottom: 8px;
     @media (max-width: 768px) {
       font-size: 1.1rem;
@@ -177,15 +167,6 @@ const PageContent = styled.div`
       margin-bottom: 8px;
     }
   }
-  @media (max-width: 768px) {
-    padding: 0 2vw;
-  }
-  @media (max-width: 480px) {
-    padding: 0 4vw;
-  }
-  @media (max-width: 360px) {
-    padding: 0 2vw;
-  }
 `;
 
 const Avatar = styled.img`
@@ -193,46 +174,76 @@ const Avatar = styled.img`
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid #F9D6DA;
+  border: 5px solid #f9d6da;
   margin-bottom: 18px;
   box-shadow: 0 2px 12px 0 #f9d6da55;
   @media (max-width: 768px) {
     width: 100px;
     height: 100px;
-    border: 4px solid #F9D6DA;
+    border: 4px solid #f9d6da;
     margin-bottom: 12px;
   }
   @media (max-width: 480px) {
     width: 80px;
     height: 80px;
-    border: 3px solid #F9D6DA;
+    border: 3px solid #f9d6da;
     margin-bottom: 10px;
   }
   @media (max-width: 360px) {
     width: 70px;
     height: 70px;
-    border: 2px solid #F9D6DA;
+    border: 2px solid #f9d6da;
     margin-bottom: 8px;
   }
 `;
 
+const BigAvatar = styled(Avatar)`
+  width: 250px;
+  height: 250px;
+  margin-bottom: 24px;
+  border-width: 7px;
+  box-shadow: 0 4px 24px 0 #f9d6da77;
+  @media (max-width: 768px) {
+    width: 190px;
+    height: 190px;
+    margin-bottom: 16px;
+    border-width: 5px;
+  }
+  @media (max-width: 480px) {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 12px;
+    border-width: 4px;
+  }
+  @media (max-width: 360px) {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 10px;
+    border-width: 3px;
+  }
+`;
+
 const DownloadButton = styled.button`
-  background: linear-gradient(135deg, ${props => props.theme.colors.mimiPink}, ${props => props.theme.colors.frenchGray});
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.theme.colors.mimiPink},
+    ${(props) => props.theme.colors.frenchGray}
+  );
   border: none;
   border-radius: 25px;
   padding: 15px 30px;
-  font-family: ${props => props.theme.fonts.secondary};
+  font-family: ${(props) => props.theme.fonts.secondary};
   font-size: 16px;
   font-weight: bold;
-  color: ${props => props.theme.colors.wenge};
+  color: ${(props) => props.theme.colors.wenge};
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: ${props => props.theme.shadows.medium};
+  box-shadow: ${(props) => props.theme.shadows.medium};
   margin-top: 20px;
   margin-bottom: 80px;
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${props => props.theme.shadows.strong};
+    box-shadow: ${(props) => props.theme.shadows.strong};
   }
   @media (max-width: 768px) {
     padding: 12px 24px;
@@ -263,16 +274,16 @@ const InviteImage = styled.img`
   border-radius: 18px;
   margin: 0 auto 18px auto;
   box-shadow: 0 4px 32px 0 #f9d6da33;
-  border: 2px solid #F9D6DA;
+  border: 2px solid #f9d6da;
   @media (max-width: 768px) {
     border-radius: 12px;
     margin: 0 auto 12px auto;
-    border: 1.5px solid #F9D6DA;
+    border: 1.5px solid #f9d6da;
   }
   @media (max-width: 480px) {
     border-radius: 10px;
     margin: 0 auto 10px auto;
-    border: 1px solid #F9D6DA;
+    border: 1px solid #f9d6da;
   }
   @media (max-width: 360px) {
     border-radius: 8px;
@@ -305,7 +316,11 @@ const NavigationContainer = styled.div`
 `;
 
 const NavButton = styled.button`
-  background: linear-gradient(135deg, ${props => props.theme.colors.mimiPink}, ${props => props.theme.colors.frenchGray});
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.theme.colors.mimiPink},
+    ${(props) => props.theme.colors.frenchGray}
+  );
   border: none;
   border-radius: 50%;
   width: 50px;
@@ -316,20 +331,20 @@ const NavButton = styled.button`
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: ${props => props.theme.shadows.medium};
-  color: ${props => props.theme.colors.wenge};
-  
+  box-shadow: ${(props) => props.theme.shadows.medium};
+  color: ${(props) => props.theme.colors.wenge};
+
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.theme.shadows.strong};
+    box-shadow: ${(props) => props.theme.shadows.strong};
   }
-  
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
   }
-  
+
   @media (max-width: 768px) {
     width: 45px;
     height: 45px;
@@ -355,7 +370,7 @@ const Ribbon = styled.div`
   border-radius: 12px;
   color: #fff;
   font-size: 0.9rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -381,8 +396,9 @@ const Bow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  &::before, &::after {
-    content: '';
+  &::before,
+  &::after {
+    content: "";
     display: block;
     width: 18px;
     height: 18px;
@@ -392,8 +408,12 @@ const Bow = styled.div`
     margin: 0 2px;
     opacity: 0.7;
   }
-  &::before { left: 0; }
-  &::after { right: 0; }
+  &::before {
+    left: 0;
+  }
+  &::after {
+    right: 0;
+  }
 `;
 
 const CapIcon = styled(FaGraduationCap)`
@@ -419,13 +439,13 @@ const Dot = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: ${props => props.active ? '#d94f6a' : '#d1cacf'};
-  opacity: ${props => props.active ? 1 : 0.5};
+  background: ${(props) => (props.active ? "#d94f6a" : "#d1cacf")};
+  opacity: ${(props) => (props.active ? 1 : 0.5)};
   transition: background 0.2s, opacity 0.2s;
 `;
 
 const NameScript = styled.div`
-  font-family: 'Dancing Script', cursive;
+  font-family: ${(props) => props.theme.fonts.script};
   font-size: 2.3rem;
   color: #d94f6a;
   font-weight: 700;
@@ -436,12 +456,12 @@ const NameScript = styled.div`
 
 // Lấy tên từ URL
 function getGuestName() {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    return name ? decodeURIComponent(name) : 'Bạn';
+    const name = params.get("name");
+    return name ? decodeURIComponent(name) : "Bạn";
   }
-  return 'Bạn';
+  return "Bạn";
 }
 
 const NUM_PAGES = 6;
@@ -484,7 +504,7 @@ const InvitationBook = () => {
         showCover={false}
         mobileScrollSupport={true}
         ref={bookRef}
-        style={{ margin: '0 auto', borderRadius: 18 }}
+        style={{ margin: "0 auto", borderRadius: 18 }}
         className="invitation-flipbook"
         onFlip={onFlip}
       >
@@ -492,63 +512,95 @@ const InvitationBook = () => {
         <PageStyled>
           <Flower>🌸</Flower>
           <Ribbon>Mời bạn</Ribbon>
-          <PageContent>
+          <PageContent style={{ paddingTop: "20%" }}>
             <CapIcon />
             <h1>LỄ TỐT NGHIỆP</h1>
             {/* <div className="desc">Thân mời bạn:</div> */}
             <div className="guest">Các bạn</div>
-            <div className="desc">Hãy cùng mình lưu lại khoảnh khắc ý nghĩa này nhé!</div>
+            <div className="desc">
+              Hãy cùng mình lưu lại khoảnh khắc ý nghĩa này nhé!
+            </div>
           </PageContent>
         </PageStyled>
         {/* Trang 2: Nhân vật */}
         <PageStyled>
-          <Bow />
-          <PageContent>
-            <Avatar src={avatarUrl} alt="Hà Vụng Liên" onError={e => e.target.style.display='none'} />
+          {/* <Bow /> */}
+          <PageContent  style={{ paddingTop: "10%" }}>
+            <BigAvatar
+              src={avatarUrl}
+              alt="Hà Vụng Liên"
+              onError={(e) => (e.target.style.display = "none")}
+            />
             <NameScript>Hà Vụng Liên</NameScript>
-            <div className="desc">Tốt nghiệp - Một hành trình khép lại, một hành trình mới bắt đầu!</div>
+            <div className="desc">
+              Tốt nghiệp – khép lại một hành trình học hỏi và trưởng thành, mở
+              ra một chặng đường mới mang theo ước mơ và sứ mệnh phía trước.
+            </div>
           </PageContent>
         </PageStyled>
         {/* Trang 3: Địa điểm */}
         <PageStyled>
-          <PageContent>
-            <FaMapMarkerAlt style={{ color: '#d94f6a', fontSize: '2rem', marginBottom: 8 }} />
+          <PageContent style={{ paddingTop: "20%" }}>
+            <FaMapMarkerAlt
+              style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
+            />
             <h2>Địa điểm tổ chức</h2>
             <div className="desc">Trường Đại học Sư phạm TP. Hồ Chí Minh</div>
             <div className="desc">280 An Dương Vương, Phường 4, Quận 5</div>
-            <div style={{ marginTop: 10, color: '#d94f6a', fontSize: 18 }}>🎈 Hẹn gặp bạn tại đây! 🎈</div>
+            <div style={{ marginTop: 10, color: "#d94f6a", fontSize: 18 }}>
+              🎈 Hẹn gặp bạn tại đây! 🎈
+            </div>
           </PageContent>
         </PageStyled>
         {/* Trang 4: Thời gian */}
         <PageStyled>
-          <PageContent>
-            <FaClock style={{ color: '#d94f6a', fontSize: '2rem', marginBottom: 8 }} />
+          <PageContent  style={{ paddingTop: "20%" }}>
+            <FaClock
+              style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
+            />
             <h2>Thời gian</h2>
             <div className="desc">9h sáng, Thứ ba</div>
             <div className="desc">15/07/2025</div>
-            <div style={{ marginTop: 10, color: '#d94f6a', fontSize: 18 }}>⏳ Đừng quên lưu lịch nhé!</div>
+            <div style={{ marginTop: 10, color: "#d94f6a", fontSize: 18 }}>
+              ⏳ Đừng quên lưu lịch nhé!
+            </div>
           </PageContent>
         </PageStyled>
         {/* Trang 5: Liên hệ */}
         <PageStyled>
-          <PageContent>
-            <FaPhoneAlt style={{ color: '#d94f6a', fontSize: '2rem', marginBottom: 8 }} />
+          <PageContent  style={{ paddingTop: "20%" }}>
+            <FaPhoneAlt
+              style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
+            />
             <h2>Liên hệ</h2>
             <div className="desc">Nếu cần hỗ trợ, hãy gọi cho mình nhé!</div>
-            <div className="desc" style={{ fontWeight: 600, fontSize: 18 }}>0902 473 441</div>
-            <div style={{ marginTop: 10, color: '#d94f6a', fontSize: 16, fontWeight: 600 }}>💬 Rất mong được gặp bạn!</div>
+            <div className="desc" style={{ fontWeight: 600, fontSize: 18 }}>
+              0902 473 441
+            </div>
+            <div
+              style={{
+                marginTop: 10,
+                color: "#d94f6a",
+                fontSize: 16,
+                fontWeight: 600,
+              }}
+            >
+              💬 Rất mong được gặp bạn!
+            </div>
           </PageContent>
         </PageStyled>
         {/* Trang 6: Quà tặng/Ảnh */}
         <PageStyled>
           <PageContent>
             <InviteImage src={cardInviteUrl} alt="Thiệp mời tốt nghiệp" />
-            <DownloadButton onClick={() => {
-              const link = document.createElement('a');
-              link.href = cardInviteUrl;
-              link.download = 'card-invite.jpg';
-              link.click();
-            }}>
+            <DownloadButton
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = cardInviteUrl;
+                link.download = "card-invite.jpg";
+                link.click();
+              }}
+            >
               🎁 Tải thư mời về máy
             </DownloadButton>
           </PageContent>

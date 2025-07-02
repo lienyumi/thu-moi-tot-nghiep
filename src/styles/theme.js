@@ -7,8 +7,9 @@ export const theme = {
     wenge: '#7B6670',
   },
   fonts: {
-    primary: "'Playfair Display', serif",
+    primary: "'Quicksand', sans-serif",
     secondary: "'Poppins', sans-serif",
+    script: "'Dancing Script', cursive",
   },
   shadows: {
     soft: '0 4px 20px rgba(123, 102, 112, 0.1)',
