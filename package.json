@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://baobui.github.io/SeeYouThere",
+  "homepage": "https://lienyumi.github.io/thu-moi-tot-nghiep",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
