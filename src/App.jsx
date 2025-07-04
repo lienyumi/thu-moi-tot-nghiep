@@ -137,7 +137,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
-        <audio ref={audioRef} src="/audio.m4a" preload="auto" />
+        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}audio.m4a`} preload="auto" />
         <ContentWrapper>
           <AnimatePresence mode="wait">
             {!showInvitation ? (

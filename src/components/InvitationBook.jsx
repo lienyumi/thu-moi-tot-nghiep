@@ -454,6 +454,61 @@ const NameScript = styled.div`
   text-shadow: 0 2px 8px #f9d6da55;
 `;
 
+// Thêm BorderCorner cho viền góc
+const BorderCorner = styled.div`
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+
+  &.top-right {
+    top: 0;
+    right: 0;
+    border-top: 4px solid #f9d6da;
+    border-right: 4px solid #d1cacf;
+    border-top-right-radius: 18px;
+  }
+  &.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-bottom: 4px solid #d1cacf;
+    border-left: 4px solid #f9d6da;
+    border-bottom-left-radius: 18px;
+  }
+`;
+
+// Thêm styled-component cho viền góc ảnh thiệp mời
+const InviteImageWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 90%;
+  max-width: 420px;
+  margin: auto;
+  padding: 12px;
+`;
+const CornerBorder = styled.div`
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+  &.top-left {
+    top: 12px;
+    left: 12px;
+    border-top: 3px double #f9d6da;
+    border-left: 3px double #f9d6da;
+    border-top-left-radius: 16px;
+  }
+  &.bottom-right {
+    bottom: 12px;
+    right: 12px;
+    border-bottom: 3px double #f9d6da;
+    border-right: 3px double #f9d6da;
+    border-bottom-right-radius: 16px;
+  }
+`;
+
 // Lấy tên từ URL
 function getGuestName() {
   if (typeof window !== "undefined") {
@@ -490,6 +545,9 @@ const InvitationBook = () => {
     setCurrentPage(e.data);
   };
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const page2PaddingTop = isMobile ? '10%' : '0%';
+
   return (
     <BookContainer>
       <HTMLFlipBook
@@ -509,7 +567,9 @@ const InvitationBook = () => {
         onFlip={onFlip}
       >
         {/* Trang 1: Lời mời */}
-        <PageStyled>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
           <Flower>🌸</Flower>
           <Ribbon>Mời bạn</Ribbon>
           <PageContent style={{ paddingTop: "20%" }}>
@@ -523,9 +583,10 @@ const InvitationBook = () => {
           </PageContent>
         </PageStyled>
         {/* Trang 2: Nhân vật */}
-        <PageStyled>
-          {/* <Bow /> */}
-          <PageContent  style={{ paddingTop: "10%" }}>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
+          <PageContent style={{ paddingTop: page2PaddingTop }}>
             <BigAvatar
               src={avatarUrl}
               alt="Hà Vụng Liên"
@@ -539,7 +600,9 @@ const InvitationBook = () => {
           </PageContent>
         </PageStyled>
         {/* Trang 3: Địa điểm */}
-        <PageStyled>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
           <PageContent style={{ paddingTop: "20%" }}>
             <FaMapMarkerAlt
               style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
@@ -548,18 +611,20 @@ const InvitationBook = () => {
             <div className="desc">Trường Đại học Sư phạm TP. Hồ Chí Minh</div>
             <div className="desc">280 An Dương Vương, Phường 4, Quận 5</div>
             <div style={{ marginTop: 10, color: "#d94f6a", fontSize: 18 }}>
-              🎈 Hẹn gặp bạn tại đây! 🎈
+              🎈 Hẹn gặp lại các bạn tại đây! 🎈
             </div>
           </PageContent>
         </PageStyled>
         {/* Trang 4: Thời gian */}
-        <PageStyled>
-          <PageContent  style={{ paddingTop: "20%" }}>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
+          <PageContent style={{ paddingTop: "20%" }}>
             <FaClock
               style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
             />
             <h2>Thời gian</h2>
-            <div className="desc">9h sáng, Thứ ba</div>
+            <div className="desc">Thứ ba, 10h-11h sáng </div>
             <div className="desc">15/07/2025</div>
             <div style={{ marginTop: 10, color: "#d94f6a", fontSize: 18 }}>
               ⏳ Đừng quên lưu lịch nhé!
@@ -567,8 +632,10 @@ const InvitationBook = () => {
           </PageContent>
         </PageStyled>
         {/* Trang 5: Liên hệ */}
-        <PageStyled>
-          <PageContent  style={{ paddingTop: "20%" }}>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
+          <PageContent style={{ paddingTop: "20%" }}>
             <FaPhoneAlt
               style={{ color: "#d94f6a", fontSize: "2rem", marginBottom: 8 }}
             />
@@ -585,14 +652,18 @@ const InvitationBook = () => {
                 fontWeight: 600,
               }}
             >
-              💬 Rất mong được gặp bạn!
+              💬 Rất mong chờ được gặp các bạn!
             </div>
           </PageContent>
         </PageStyled>
         {/* Trang 6: Quà tặng/Ảnh */}
-        <PageStyled>
+        <PageStyled style={{ position: "relative" }}>
+          <CornerBorder className="top-left" />
+          <CornerBorder className="bottom-right" />
           <PageContent>
-            <InviteImage src={cardInviteUrl} alt="Thiệp mời tốt nghiệp" />
+            <InviteImageWrapper>
+              <InviteImage src={cardInviteUrl} alt="Thiệp mời tốt nghiệp" />
+            </InviteImageWrapper>
             <DownloadButton
               onClick={() => {
                 const link = document.createElement("a");
